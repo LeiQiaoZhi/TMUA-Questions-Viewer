@@ -1,0 +1,10 @@
+spec P1 Q1
+spec P1 Q2
+spec P1 Q6
+spec P1 Q9
+spec P1 Q13
+spec P1 Q14
+spec P1 Q16
+2016 P1 Q4
+2016 P1 Q8
+2016 P1 Q17
