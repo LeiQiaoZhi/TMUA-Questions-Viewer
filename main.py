@@ -46,4 +46,5 @@ class App(customtkinter.CTk):
 customtkinter.set_default_color_theme("dark-blue")
 data_loader = TMUADataLoader("questions.csv")
 app = App(data_loader)
+app.state("zoomed")
 app.mainloop()

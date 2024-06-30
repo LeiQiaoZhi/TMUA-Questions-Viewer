@@ -116,7 +116,7 @@ class LazySolutionToggleFrame(customtkinter.CTkFrame):
 
         # Create a button to toggle the frame
         self.toggle_button = customtkinter.CTkButton(self,
-                                                     text="Show Solution",
+                                                     text=f"Show Solution ({answer})",
                                                      command=self.toggle_image)
         self.toggle_button.grid(row=0,
                                 column=0,
@@ -176,17 +176,17 @@ class LazySolutionToggleFrame(customtkinter.CTkFrame):
         if self.state:
             self.frame_to_toggle.grid_remove()
             self.slider.grid_remove()
-            self.toggle_button.configure(text="Show Solution")
+            self.toggle_button.configure(text=f"Show Solution ({self.answer})")
         else:
             self.frame_to_toggle.grid()
             self.slider.grid()
-            self.toggle_button.configure(text="Hide Solution")
+            self.toggle_button.configure(text=f"Hide Solution ({self.answer})")
         self.state = not self.state
 
 
 class QuestionCardFrame(customtkinter.CTkFrame):
 
-    def __init__(self, master, year, paper, question, category, sub_category,
+    def __init__(self, master, index, year, paper, question, category, sub_category,
                  approach, answer, type, in_list, list_colors):
         border_color = customtkinter.ThemeManager.theme["CTkFrame"][
             "border_color"]
@@ -197,7 +197,7 @@ class QuestionCardFrame(customtkinter.CTkFrame):
         self.grid_columnconfigure(1, weight=0)
         self.grid_columnconfigure(2, weight=1)
 
-        question_text = f"{year} {paper} Q{question}"
+        question_text = f"[{index+1}] {year} {paper} Q{question}"
         question_label = customtkinter.CTkLabel(self,
                                                 text=question_text,
                                                 font=(FONT, 16, "bold"))
@@ -354,6 +354,7 @@ class QuestionsFrame(customtkinter.CTkFrame):
             question_row = questions.iloc[i]
             question_frame = QuestionCardFrame(
                 questions_scroll_frame,
+                index=i,
                 year=question_row.Year,
                 paper=question_row.P,
                 question=question_row.Q,
