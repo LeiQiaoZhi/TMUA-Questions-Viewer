@@ -4,8 +4,7 @@ from styling import *
 import math
 from PIL import Image, ImageGrab
 import io
-import win32clipboard
-
+from clipboard import copy_image_to_clipboard
 
 class LazyQuestionToggleFrame(customtkinter.CTkFrame):
 
@@ -50,6 +49,8 @@ class LazyQuestionToggleFrame(customtkinter.CTkFrame):
         self.image_label.grid(row=0, column=0, padx=10, pady=5, sticky="w")
         self.image_label.bind("<Button-3>",
                               lambda e: self.copy_image_to_clipboard())
+        self.image_label.bind("<Button-1>",
+                              lambda e: self.copy_image_to_clipboard())
         self.image_loaded = True
 
         self.slider = customtkinter.CTkSlider(self.frame_to_toggle,
@@ -81,13 +82,7 @@ class LazyQuestionToggleFrame(customtkinter.CTkFrame):
         output = io.BytesIO()
         # Save the image to the stream in BMP format
         self.question_image.save(output, 'BMP')
-        data = output.getvalue()[14:]  # Remove BMP header
-
-        # Open the clipboard and set the data
-        win32clipboard.OpenClipboard()
-        win32clipboard.EmptyClipboard()
-        win32clipboard.SetClipboardData(win32clipboard.CF_DIB, data)
-        win32clipboard.CloseClipboard()
+        copy_image_to_clipboard(output)
         # Create a label to show the message
         info_label = customtkinter.CTkLabel(
             self,
